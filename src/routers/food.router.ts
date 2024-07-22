@@ -23,10 +23,9 @@ router.post('/add-food', expressAsyncHandler(
         const newFood = {
             name: req.body.name,
             price: req.body.price,
-            tag:req.body.tag,
+            tag: req.body.tag,
             imgUrl: req.body.imgUrl,
-            cookTime: req.body.cookTime,
-            // Add other necessary fields here
+            cookTime: req.body.cookTime
         };
         const createdFood = await FoodModel.create(newFood);
         res.status(201).send(createdFood);
@@ -80,20 +79,62 @@ router.get('/tags', expressAsyncHandler(
     }))
 router.get('/tag/:tagName', expressAsyncHandler(
     async (req, res) => {
-        const foodByTag =await FoodModel.find({tags:req.params.tagName})
+        const foodByTag = await FoodModel.find({ tags: req.params.tagName })
         res.send(foodByTag);
-    
+
     }
 ))
 
 router.get('/:foodId', expressAsyncHandler(
-        async (req, res) => {
-            const foodById = await FoodModel.findById(req.params.foodId);
-            res.send(foodById);
-            res.send(foodById);
-    
-        })
+    async (req, res) => {
+        const foodById = await FoodModel.findById(req.params.foodId);
+        res.send(foodById);
+    })
 
 )
+
+
+/**
+ * Food Crud Operations
+ */
+router.delete('/delete/:foodId', expressAsyncHandler(
+    async (req, res) => {
+        const foodId = req.params.foodId;
+        console.log('food id is', foodId);
+
+        const deletedFood = await FoodModel.findByIdAndDelete(foodId);
+        if (!deletedFood) {
+            res.status(400).send({ message: 'Food Not Found' });
+            return;
+        }
+        res.status(200).send(deletedFood);
+
+
+
+    }
+))
+
+router.put('/update/:foodId', expressAsyncHandler(
+    async (req, res) => {
+        const foodId = req.params.foodId;
+        const food = req.body;
+        console.log('food id is', foodId);
+        console.log('food data is', food);
+        
+
+        const updatedFood = await FoodModel.findByIdAndUpdate(foodId, food, {
+            new: true, // Return the updated document
+            runValidators: true, // Ensure that validation rules are applied
+        });
+        // if (!updatedFood) {
+        //     res.status(400).send({ message: 'Food Not Found' });
+        //     return;
+        // }
+        res.status(200).send(updatedFood);
+
+
+
+    }
+))
 
 export default router;
