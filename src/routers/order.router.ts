@@ -33,7 +33,14 @@ router.get('/newOrderForCurrentUser', expressAsyncHandler(async (req: any, res) 
     else res.status(HTTP_BAD_REQUEST).send();
 }))
 
-
+router.get('/allOrders', expressAsyncHandler(async (req, res) => {
+    try {
+        const orders = await OrderModel.find();
+        res.send(orders);
+    } catch (error) {
+        res.status(HTTP_BAD_REQUEST).send('Failed to fetch orders');
+    }
+}));
 
 async function getNewOrderForCurrentUser(req: any) {
     return await OrderModel.findOne({ user: req.user.id, status: OrderStatus.NEW });
