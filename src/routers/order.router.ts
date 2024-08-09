@@ -9,8 +9,9 @@ router.use(authMid);
 
 router.post('/create',
     expressAsyncHandler(async (req: any, res: any) => {
-        console.log('reached bakend', req.body)
         const requestOrder = req.body;
+        console.log('requesr order',req.user);
+        
         if (requestOrder.items.length <= 0) {
             res.status(HTTP_BAD_REQUEST).send('Cart Is Empty!');
             return;
@@ -43,6 +44,7 @@ router.get('/allOrders', expressAsyncHandler(async (req, res) => {
 }));
 
 async function getNewOrderForCurrentUser(req: any) {
+    console.log('user id is',req.user);
     return await OrderModel.findOne({ user: req.user.id, status: OrderStatus.NEW });
 }
 export default router;
