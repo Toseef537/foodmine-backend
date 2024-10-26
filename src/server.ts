@@ -13,7 +13,8 @@ dbConnect();
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'https://foodmine-frontend-lac.vercel.app'
+    credentials:true,
+    origin: 'https://foodmine-frontend-gamma.vercel.app/'
 }))
 
 app.use("/api/foods", foodRouter)
