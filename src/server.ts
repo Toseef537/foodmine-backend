@@ -1,6 +1,4 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
 import express from "express";
 import cors from "cors";
 import { sample_food, sample_tags, Sample_Users } from "./data";
@@ -9,6 +7,7 @@ import userRouter from "./routers/user.router"
 import { dbConnect } from './configs/database.config';
 import orderRouter from './routers/order.router';
 import cartRouter from './routers/cart.router';
+dotenv.config();
 dbConnect();
 const app = express();
 app.use(express.json());
