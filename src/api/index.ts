@@ -12,10 +12,14 @@ import cartRouter from '../routers/cart.router';
 dbConnect();
 const app = express();
 app.use(express.json());
+// app.use(cors({
+//     credentials:true,
+//     origin: 'https://foodmine-frontend-gamma.vercel.app/'
+// }))
+
 app.use(cors({
-    credentials:true,
-    origin: 'https://foodmine-frontend-gamma.vercel.app/'
-}))
+    origin: 'https://foodmine-frontend-gamma.vercel.app',
+  }));
 
 app.use("/api/foods", foodRouter)
 app.use("/api/users",userRouter)
