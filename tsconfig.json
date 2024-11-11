@@ -6,7 +6,8 @@
       "outDir": "./dist",
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "target":"ESNext"
     },
-    "include": ["src/**/*", "src/server.ts"],
+    "include": ["src/**/*", "api/server.ts"],
 }
