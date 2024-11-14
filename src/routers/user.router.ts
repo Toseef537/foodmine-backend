@@ -62,8 +62,13 @@ const generateWebTokenResponse = (user: any) => {
         email: user.email,
         isAdmin: user.isAdmin
     }, secretKey!, { expiresIn: '3d' })
-    user.token = token;
-    return user;
+    const resUser={
+        id:user.id,
+        name:user.name,
+        isAdmin:user.isAdmin,
+        token:token
+    }
+    return resUser;
 
 }
 export default router;
